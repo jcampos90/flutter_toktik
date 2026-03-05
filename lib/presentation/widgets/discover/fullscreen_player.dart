@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_vlc_player/flutter_vlc_player.dart';
 import 'package:tok_tik/presentation/widgets/discover/gradient_video_background.dart';
 import 'package:video_player/video_player.dart';
 
@@ -19,8 +18,6 @@ class FullscreenPlayer extends StatefulWidget {
 
 class _FullscreenPlayerState extends State<FullscreenPlayer> {
   late VideoPlayerController controller;
-  //late VlcPlayerController _videoPlayerController;
-  //late Future<void> initializeVideoPlayerFuture;
 
   Future<void> initializePlayer() async {}
 
@@ -35,22 +32,12 @@ class _FullscreenPlayerState extends State<FullscreenPlayer> {
       ..setVolume(0)
       ..setLooping(true)
       ..play();
-
-    // _videoPlayerController = VlcPlayerController.asset(
-    //   widget.videoUrl,
-    //   hwAcc: HwAcc.full,
-    //   autoPlay: true,
-    //   options: VlcPlayerOptions(),
-    // );
   }
 
   @override
-  void dispose() async {
-    super.dispose();
+  void dispose() {
     controller.dispose();
-
-    //await _videoPlayerController.stopRendererScanning();
-    //await _videoViewController.dispose();
+    super.dispose();
   }
 
   @override
@@ -63,10 +50,8 @@ class _FullscreenPlayerState extends State<FullscreenPlayer> {
       onTap: () {
         if (controller.value.isPlaying) {
           controller.pause();
-          print("paused");
         } else {
           controller.play();
-          print("playing");
         }
       },
       child: AspectRatio(

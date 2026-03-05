@@ -4,6 +4,7 @@ import 'package:tok_tik/domain/repositories/video_post_repository.dart';
 
 class DiscoverProvider extends ChangeNotifier {
   bool initialLoading = true;
+  bool hasError = false;
   final List<VideoPost> videos = [];
 
   final VideoPostRepository videoPostRepository;
@@ -11,17 +12,17 @@ class DiscoverProvider extends ChangeNotifier {
   DiscoverProvider({required this.videoPostRepository});
 
   Future<void> loadNextPage() async {
-    //await Future.delayed(const Duration(seconds: 5));
+    try {
+      final newVideos = await videoPostRepository.getTrendingVideosByPage(1);
 
-    // final newVideos = videoPosts
-    //     .map((x) => VideoModel.fromJson(x).toVideoPost())
-    //     .toList();
+      videos.addAll(newVideos);
 
-    final newVideos = await videoPostRepository.getTrendingVideosByPage(1);
-
-    videos.addAll(newVideos);
-
-    initialLoading = false;
+      initialLoading = false;
+      hasError = false;
+    } catch (e) {
+      initialLoading = false;
+      hasError = true;
+    }
 
     notifyListeners();
   }

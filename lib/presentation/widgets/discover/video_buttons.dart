@@ -18,7 +18,7 @@ class VideoButtons extends StatelessWidget {
         ),
         SizedBox(height: 20),
         _CustomIconButton(
-          value: video.likes,
+          value: video.views,
           icon: Icons.remove_red_eye,
           color: Colors.white,
         ),
